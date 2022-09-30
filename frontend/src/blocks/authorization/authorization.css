@@ -1,0 +1,12 @@
+.authorization {
+    position: relative;
+    max-width: 358px;
+    display: flex;
+    margin: 0 auto;
+  }
+
+  @media screen and (max-width: 650px) {
+    .authorization__button {
+      max-width: 260px;
+    }
+  }

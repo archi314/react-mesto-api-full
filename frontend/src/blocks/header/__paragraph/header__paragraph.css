@@ -1,0 +1,16 @@
+.header__paragraph {
+	color: #FFFFFF;
+	font-size: 18px;
+  font-weight: 500;
+	line-height: 22px;
+	margin: 0 24px 0 0;
+}
+
+@media screen and (max-width: 650px) {
+  .header__paragraph {
+		font-size: 14px;
+    font-weight: 400;
+	  line-height: 16.94px;
+	  margin: 0 10px 0 0;
+    }
+  }

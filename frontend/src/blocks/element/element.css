@@ -1,0 +1,15 @@
+.element {
+    position: relative;
+    width: 282px;
+    max-height: 361px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+  }
+  
+  @media screen and (max-width: 650px) {
+    .element {
+      margin: 0 auto;
+    }
+  }
+  

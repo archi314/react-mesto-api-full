@@ -1,0 +1,8 @@
+.element__heart-icon_active{
+    background-color: transparent;
+    background-image: url("../../../../images/heart-icon_active.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: none;
+}

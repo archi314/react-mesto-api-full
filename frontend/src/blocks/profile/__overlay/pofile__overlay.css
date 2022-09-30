@@ -1,0 +1,22 @@
+.profile__overlay {
+  margin: 0 28px 0 0;
+  max-width: 120px;
+  max-height: 120px;
+}
+
+@media screen and (max-width: 650px) {
+  .profile__overlay {
+    display: flex;
+    align-items: center;
+    max-height: 127.5px;
+    margin: 0 auto  22.25px auto;
+  }
+}
+
+
+.profile__overlay:hover {
+  background-image: url('../../../images/edit-profile-icon.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 26px;
+}
