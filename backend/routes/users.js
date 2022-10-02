@@ -19,6 +19,7 @@ const {
   updateUserProfile,
   updateUserAvatar,
   login,
+  signout,
 } = require('../controllers/users');
 
 const auth = require('../middlewares/auth');
@@ -46,6 +47,7 @@ userRoutes.use(auth);
 
 userRoutes.get('/users', getUsers);
 userRoutes.get('/users/me', getUserInfo);
+userRoutes.get('/signout', signout);
 
 userRoutes.get('/users/:userId', celebrate({
   params: Joi.object().keys({

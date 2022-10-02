@@ -6,6 +6,7 @@ const cors = require('cors');
 const { errors } = require('celebrate');
 const { userRoutes } = require('./routes/users');
 const { cardRoutes } = require('./routes/cards');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const ErrorNotFound = require('./errors/ErrorNotFound'); /** Ошибка 404. */
 
@@ -25,12 +26,22 @@ app.use(
   }),
 );
 
+app.use(requestLogger);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 app.use(userRoutes);
 app.use(cardRoutes);
 
 app.use('*', (req, res, next) => {
   next(new ErrorNotFound('Страница не найдена'));
 });
+
+app.use(errorLogger);
 
 app.use(errors());
 

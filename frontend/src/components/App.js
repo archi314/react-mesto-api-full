@@ -32,23 +32,38 @@ function App() {
   const [cards, setCards] = useState([]);
 
   const [loggedIn, setLoggedIn] = useState(false);
+  const history = useHistory();
   const [infoToolTipOpened, setInfoToolTipOpened] = useState(false);
   const [infoToolTipStatus, setInfoToolTipStatus] = useState(false);
   const [authEmail, setAuthEmail] = useState("");
   const [userLoginData, setUserLoginData] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
+    api
+      .getUserInfo()
+      .then((userData) => {
+        setLoggedIn(true);
+        setAuthEmail(userData.email);
+        setCurrentUser(userData);
+        history.push('/');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [loggedIn, history]);
+
+  useEffect(() => {
     if (loggedIn) {
-      Promise.all([api.getUserInfo(), api.getInitialCards()])
-        .then(([userData, card]) => {
-          setCurrentUser(userData);
+      api
+        .getInitialCards()
+        .then((card) => {
           setCards(card);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [loggedIn]);
+  }, [loggedIn, history]);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -99,11 +114,11 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
 
     if (!isLiked) {
       api
-        .setLike(card._id, !isLiked)
+        .setLike(card._id)
         .then((newCard) => {
           setCards((state) =>
             state.map((c) => (c._id === card._id ? newCard : c))
@@ -130,7 +145,7 @@ function App() {
     api
       .removeCard(card._id)
       .then(() => {
-        setCards(cards.filter((c) => c._id !== card._id));
+        setCards((state) => state.filter((c) => c._id !== card._id));
       })
       .catch((err) => {
         console.error(err);
@@ -146,38 +161,6 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
-
-  const history = useHistory();
-
-  const handleTokenCheck = () => {
-    const token = localStorage.getItem("jwt");
-    if (!token) {
-      return;
-    }
-    auth
-      .getData(token)
-      .then((res) => {
-        if (res) {
-          setAuthEmail(res.data.email);
-          setLoggedIn(true);
-        } else {
-          localStorage.removeItem("jwt");
-        }
-      })
-      .catch((res) => {
-        console.log(res);
-      });
-  };
-
-  useEffect(() => {
-    handleTokenCheck();
-  }, []);
-
-  useEffect(() => {
-    if (loggedIn) {
-      history.push("/");
-    }
-  }, [loggedIn, history]);
 
   /** Регистрация нового пользователя */
 
@@ -210,15 +193,9 @@ function App() {
     return auth
       .login(email, password)
       .then((res) => {
-        if (res.token) {
-          localStorage.setItem("jwt", res.token);
-          setLoggedIn(true);
-          setAuthEmail(data.email);
-          history.push("/");
-        } else {
-          setInfoToolTipStatus(true);
-          setInfoToolTipOpened(true);
-        }
+        setLoggedIn(true);
+        setAuthEmail(data.email);
+        history.push("/");
       })
       .catch((err) => {
         setInfoToolTipStatus(false);
@@ -227,11 +204,14 @@ function App() {
       });
   };
 
-  const signOut = () => {
-    setLoggedIn(false);
-    setAuthEmail(null);
-    localStorage.removeItem("jwt");
-    history.push("/signin");
+  function signOut() {
+    return auth.signout()
+    .then((res) => {
+      setLoggedIn(false);
+      setAuthEmail(null);
+      history.push("/signin");
+    })
+    .catch((err) => console.log(err));
   };
 
   return (

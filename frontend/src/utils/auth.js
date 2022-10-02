@@ -1,6 +1,5 @@
 export const baseUrl = 'http://localhost:4000';
 
-
 const getResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
 };
@@ -8,6 +7,7 @@ const getResponse = (res) => {
 export const register = (email, password) => {
   return fetch (`${baseUrl}/signup`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Accept': 'application/json',
       'Content-Type':'application/json',
@@ -20,6 +20,7 @@ export const register = (email, password) => {
 export const login = (email, password) => {
   return fetch (`${baseUrl}/signin`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Accept': 'application/json',
       'Content-Type':'application/json',
@@ -29,13 +30,13 @@ export const login = (email, password) => {
     .then((res) => getResponse(res));
 };
 
-export const getData = (jwt) => {
-  return fetch (`${baseUrl}/users/me`, {
+export const signout = () => {
+  return fetch (`${baseUrl}/signout`, {
     method: 'GET',
+    credentials: 'include',
     headers: {
       'Accept': 'application/json',
       'Content-Type':'application/json',
-      'Authorization': `Bearer ${jwt}`,
     },
   })
     .then((res) => getResponse(res));

@@ -2,8 +2,8 @@ export class Api {
   constructor(url) {
     this._url = url;
     this._headers = {
-      authorization: "b3333a92-aa1e-4321-be00-eaab1687988b",
       "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,
     };
   }
 
@@ -21,12 +21,12 @@ export class Api {
     }
   }
 
-
   /** Загрузка информации о пользователе с сервера. */
 
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
       method: "GET",
+      credentials: 'include',
       headers: this._headers,
     }).then(this._checkResponse);
   }
@@ -35,6 +35,7 @@ export class Api {
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
       method: "GET",
+      credentials: 'include',
       headers: this._headers,
     }).then(this._checkResponse);
   }
@@ -44,6 +45,7 @@ export class Api {
   editUserInfo(data) {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({ name: data.name, about: data.about }),
     }).then(this._checkResponse);
@@ -54,6 +56,7 @@ export class Api {
   addUserCard(item) {
     return fetch(`${this._url}/cards`, {
       method: "POST",
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         name: item.name,
@@ -67,6 +70,7 @@ export class Api {
   removeCard(data) {
     return fetch(`${this._url}/cards/${data}`, {
       method: "DELETE",
+      credentials: 'include',
       headers: this._headers,
     }).then(this._checkResponse);
   }
@@ -76,6 +80,7 @@ export class Api {
   setLike(data) {
     return fetch(`${this._url}/cards/${data}/likes`, {
       method: "PUT",
+      credentials: 'include',
       headers: this._headers,
     }).then(this._checkResponse);
   }
@@ -83,6 +88,7 @@ export class Api {
   removeLike(data) {
     return fetch(`${this._url}/cards/${data}/likes`, {
       method: "DELETE",
+      credentials: 'include',
       headers: this._headers,
     }).then(this._checkResponse);
   }
@@ -92,6 +98,7 @@ export class Api {
   updateUserAvatar(data) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({ avatar: data.avatar }),
     }).then(this._checkResponse);
@@ -99,8 +106,7 @@ export class Api {
 }
 
 const api = new Api(
-  "http://localhost:4000",
-  "b3333a92-aa1e-4321-be00-eaab1687988b"
+  "http://localhost:4000"
 );
 
 export default api;

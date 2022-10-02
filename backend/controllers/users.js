@@ -135,10 +135,20 @@ const login = async (req, res, next) => {
     res.cookie('jwt', token, {
       maxAge: 3600000,
       httpOnly: true,
-      sameSite: true,
+      sameSite: 'none',
+      secure: true,
     });
     return res.status(200).send(user.toJSON());
-  } catch (error) {
+  } catch (err) {
+    return next(new ErrorServer('Ошибка на сервере'));
+  }
+};
+
+const signout = (req, res, next) => {
+  try {
+    res.clearCookie('jwt');
+    return res.status(200).send({ message: 'Выполнен выход' });
+  } catch (err) {
     return next(new ErrorServer('Ошибка на сервере'));
   }
 };
@@ -151,4 +161,5 @@ module.exports = {
   updateUserProfile,
   updateUserAvatar,
   login,
+  signout,
 };

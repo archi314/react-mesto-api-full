@@ -8,7 +8,7 @@ const ErrorForbidden = require('../errors/ErrorForbidden'); /** Ошибка 403
 const getCards = async (req, res, next) => {
   try {
     const cards = await Card.find({});
-    return res.send(cards);
+    return res.send(cards.reverse());
   } catch (err) {
     return next(new ErrorServer('Ошибка на сервере'));
   }
