@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -10,7 +11,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const ErrorNotFound = require('./errors/ErrorNotFound'); /** Ошибка 404. */
 
-const { PORT = 4000 } = process.env;
+const { PORT = 3000 } = process.env; // было 4000
 
 const app = express();
 app.use(bodyParser.json());
@@ -21,7 +22,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:4000', // было 3000
     credentials: true,
   }),
 );

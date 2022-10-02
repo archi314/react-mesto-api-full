@@ -106,7 +106,7 @@ export class Api {
 }
 
 const api = new Api(
-  "http://localhost:4000"
+  "http://localhost:3000" // было 4000
 );
 
 export default api;

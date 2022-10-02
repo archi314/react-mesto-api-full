@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const ErrorBadRequest = require('../errors/ErrorBadRequest'); /** Ошбика 400. */
 const ErrorNotFound = require('../errors/ErrorNotFound'); /** Ошибка 404. */
 const ErrorServer = require('../errors/ErrorServer'); /** Ошибка 500. */
@@ -131,7 +133,7 @@ const login = async (req, res, next) => {
 
     const token = jwt.sign({
       _id: user._id,
-    }, 'SECRET');
+    }, NODE_ENV === 'production' ? JWT_SECRET : 'SECRET');
     res.cookie('jwt', token, {
       maxAge: 3600000,
       httpOnly: true,
