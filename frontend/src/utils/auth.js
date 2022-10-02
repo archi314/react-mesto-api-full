@@ -1,4 +1,4 @@
-export const baseUrl = 'http://api.artemstukalov.nomoredomains.icu/'; // было 4000
+export const baseUrl = 'http://api.artemstukalov.nomoredomains.icu'; // было 4000
 
 const getResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)

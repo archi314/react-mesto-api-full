@@ -5,6 +5,6 @@
 https://github.com/archi314/react-mesto-api-full
 
 ## Ссылки на проект:
-* IP-адрес:
-* Frontend: 
-* Backend:
+* IP-адрес: 51.250.18.166
+* Frontend: http://ArtemStukalov.nomoredomains.icu
+* Backend: http://api.artemstukalov.nomoredomains.icu
