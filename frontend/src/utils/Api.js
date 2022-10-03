@@ -1,9 +1,10 @@
 export class Api {
-  constructor(url) {
+  constructor(url, token) {
     this._url = url;
     this._headers = {
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": true,
+      Authorization: token
     };
   }
 
@@ -12,13 +13,6 @@ export class Api {
       return res.json();
     }
     return Promise.reject(`Ошибка ${res.status}`);
-  }
-
-  setToken(token) {
-    this._headers = {
-      ...this._headers,
-      Authorization: `Bearer ${token}`,
-    }
   }
 
   /** Загрузка информации о пользователе с сервера. */
@@ -106,7 +100,8 @@ export class Api {
 }
 
 const api = new Api(
-  "http://api.artemstukalov.nomoredomains.icu" // было 4000
+  "http://api.artemstukalov.nomoredomains.icu", // было 4000
+  localStorage.getItem('jwt')
 );
 
 export default api;

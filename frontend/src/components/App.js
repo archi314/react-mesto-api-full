@@ -192,9 +192,10 @@ function App() {
     setUserLoginData(email);
     return auth
       .login(email, password)
-      .then((res) => {
+      .then(({ token }) => {
         setLoggedIn(true);
         setAuthEmail(data.email);
+        localStorage.setItem('jwt', token);
         history.push("/");
       })
       .catch((err) => {
