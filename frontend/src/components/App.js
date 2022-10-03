@@ -39,7 +39,7 @@ function App() {
   const [userLoginData, setUserLoginData] = useState("");
 
   useEffect(() => {
-    if (loggedIn) {
+    if (loggedIn || localStorage.jwt) {
       api
         .getUserInfo()
         .then((userData) => {
