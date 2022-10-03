@@ -39,17 +39,19 @@ function App() {
   const [userLoginData, setUserLoginData] = useState("");
 
   useEffect(() => {
-    api
-      .getUserInfo()
-      .then((userData) => {
-        setLoggedIn(true);
-        setAuthEmail(userData.email);
-        setCurrentUser(userData);
-        history.push('/');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (loggedIn) {
+      api
+        .getUserInfo()
+        .then((userData) => {
+          setLoggedIn(true);
+          setAuthEmail(userData.email);
+          setCurrentUser(userData);
+          history.push('/');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, [loggedIn, history]);
 
   useEffect(() => {
