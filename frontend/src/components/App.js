@@ -197,7 +197,7 @@ function App() {
       .then((res) => {
         setLoggedIn(true);
         setAuthEmail(data.email);
-        sessionStorage.setItem('jwt', res.token);
+        localStorage.jwt = res.token;
         api.setToken(res.token);
         history.push("/");
       })
