@@ -140,8 +140,8 @@ const login = async (req, res, next) => {
       sameSite: 'none',
       secure: true,
     });
-    const send = { user, token };
-    return res.status(200).send(send.toJSON());
+    const send = { token };
+    return res.status(200).send(JSON.stringify(send));
   } catch (err) {
     return next(new ErrorServer('Ошибка на сервере'));
   }
