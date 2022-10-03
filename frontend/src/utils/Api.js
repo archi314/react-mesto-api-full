@@ -105,7 +105,7 @@ export class Api {
 
 const api = new Api(
   "https://api.artemstukalov.nomoredomains.icu", // было 4000
-  localStorage.getItem('jwt')
+  sessionStorage.getItem('jwt')
 );
 
 export default api;

@@ -1,6 +1,7 @@
 import "../index.css";
 import React from "react";
 import { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { Route, Switch, useHistory, Redirect } from "react-router-dom";
 
 import Header from "./Header";
@@ -30,6 +31,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+  const [cookies, setCookie] = useCookies();
 
   const [loggedIn, setLoggedIn] = useState(false);
   const history = useHistory();
@@ -37,6 +39,8 @@ function App() {
   const [infoToolTipStatus, setInfoToolTipStatus] = useState(false);
   const [authEmail, setAuthEmail] = useState("");
   const [userLoginData, setUserLoginData] = useState("");
+
+  api.setToken(cookies.jwt);
 
   useEffect(() => {
     if (loggedIn) {
@@ -197,7 +201,13 @@ function App() {
       .then((res) => {
         setLoggedIn(true);
         setAuthEmail(data.email);
-        localStorage.setItem('jwt', res.token);
+        setCookie('jwt', res.token, {
+          maxAge: 3600000,
+          httpOnly: true,
+          sameSite: 'none',
+          secure: true,
+        });
+        sessionStorage.setItem('jwt', res.token);
         api.setToken(res.token);
         history.push("/");
       })
