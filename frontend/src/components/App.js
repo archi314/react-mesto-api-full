@@ -213,6 +213,7 @@ function App() {
     .then((res) => {
       setLoggedIn(false);
       setAuthEmail(null);
+      localStorage.removeItem('jwt');
       history.push("/signin");
     })
     .catch((err) => console.log(err));
