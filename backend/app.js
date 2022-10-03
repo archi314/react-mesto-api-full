@@ -16,16 +16,17 @@ const { PORT = 3000 } = process.env; // было 4000
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 app.use(express.json());
 
 app.use(
   cors({
-    origin: 'http://artemstukalov.nomoredomains.icu', // было 3000
+    origin: 'https://artemstukalov.nomoredomains.icu', // было 3000
     credentials: true,
   }),
 );
+
+app.use(cookieParser());
 
 app.use(requestLogger);
 

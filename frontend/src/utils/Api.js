@@ -15,6 +15,10 @@ export class Api {
     return Promise.reject(`Ошибка ${res.status}`);
   }
 
+  setToken(token) {
+    this._headers.Authorization = token;
+  }
+
   /** Загрузка информации о пользователе с сервера. */
 
   getUserInfo() {
@@ -100,7 +104,7 @@ export class Api {
 }
 
 const api = new Api(
-  "http://api.artemstukalov.nomoredomains.icu", // было 4000
+  "https://api.artemstukalov.nomoredomains.icu", // было 4000
   localStorage.getItem('jwt')
 );
 
